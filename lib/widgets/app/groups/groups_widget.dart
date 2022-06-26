@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:todo_list/domain/entity/group.dart';
 import 'package:todo_list/widgets/app/groups/groups_widget_model.dart';
 
 class GroupsWidget extends StatefulWidget {
@@ -51,7 +50,6 @@ class _GroupListWidget extends StatelessWidget {
         },
         itemBuilder: (BuildContext context, int index) {
           return _GroupListRowWidget(
-            groups: groups[index],
             indexInList: index,
           );
         },
@@ -61,15 +59,14 @@ class _GroupListWidget extends StatelessWidget {
 
 class _GroupListRowWidget extends StatelessWidget {
   final int indexInList;
-  final Group groups;
-  const _GroupListRowWidget(
-      {Key? key, required this.groups, required this.indexInList})
+
+  const _GroupListRowWidget({Key? key, required this.indexInList})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final model = GroupsWidgetModelProvider.read(context)!.model;
-    // final group = model.groups[indexInList];
+    final group = model.groups[indexInList];
     return Slidable(
       endActionPane: ActionPane(
         motion: const ScrollMotion(),
@@ -86,7 +83,7 @@ class _GroupListRowWidget extends StatelessWidget {
         ],
       ),
       child: ListTile(
-        title: Text(groups.name),
+        title: Text(group.name),
         trailing: const Icon(Icons.chevron_right),
         onTap: () {},
       ),
